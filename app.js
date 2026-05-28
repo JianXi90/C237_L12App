@@ -21,6 +21,29 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+app.post('/submit', (req, res) => {
+    // Handle the vote submission logic here
+    const { song, songTitle, genre, description, link, image } = req.body;
+    songs.push({ song, songTitle, genre, description, link, image });
+    res.redirect('/songs');
+    // You can access the submitted data using req.body
+    // For example, if you have a form field named 'song', you can access it with req.body.song
+});
+app.get('/songs', (req, res) => {
+    res.render('songs');
+});
+
+app.get('/vote', (req, res) => {
+    res.render('vote');
+});
+
+app.get('/rankings', (req, res) => {
+    res.render('rankings');
+});
+
+app.get('/filter', (req, res) => {
+    res.render('filter');
+});
 // ---------------------------------------------------
 
 // Start the server
