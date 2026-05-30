@@ -13,73 +13,50 @@
 
 <body>
     <%- include('partials/navbar') %>
-        <div class="container py-5">
-
-            <h2 class="mb-4">🎵 Vote Your Favorite Songs</h2>
-
-            <div class="row">
-
-                <% for(let i=0; i < songs.length; i++) { %>
-
-                    <div class="col-md-4 mb-4">
-
-                        <div class="card shadow-sm">
-
-                            <!-- Album Cover -->
-                            <img src="<%= songs[i].albumCoverUrl %>" class="card-img-top"
-                                style="height:200px; object-fit:cover;">
-
-                            <div class="card-body">
-
-                                <!-- Song Title -->
-                                <h5 class="card-title">
-                                    <%= songs[i].song %>
-                                </h5>
-
-                                <!-- Artist -->
-                                <p class="card-text">
-                                    <b>Artist:</b>
-                                    <%= songs[i].name %>
-                                </p>
-
-                                <!-- Genre -->
-                                <p class="card-text">
-                                    <b>Genre:</b>
-                                    <%= songs[i].genre %>
-                                </p>
-
-                                <!-- Votes -->
-                                <p class="card-text">
-                                    ❤️ Votes: <%= songs[i].votes || 0 %>
-                                </p>
-
-                                <!-- Preview Button -->
-                                <% if (songs[i].previewUrl) { %>
-                                    <a href="<%= songs[i].previewUrl %>" target="_blank"
-                                        class="btn btn-success btn-sm w-100 mb-2">
-                                        ▶ Preview
-                                    </a>
-                                    <% } %>
-
-                                        <!-- Vote Button -->
-                                        <form action="/vote/<%= i %>" method="POST">
-                                            <button class="btn btn-danger w-100">
-                                                👍 Vote
-                                            </button>
-                                        </form>
-
-                            </div>
-
-                        </div>
-
+<div class="container py-5">
+    <h2 class="mb-4">Vote Your Favorite Songs</h2>
+    <div class="row">
+        <% let votedSongs = session.votedSongs || []; %>
+        <% for(let i = 0; i < songs.length; i++) { %>
+            <% let hasVoted = votedSongs.includes(i.toString()); %>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm <%= hasVoted ? 'opacity-50' : '' %>">
+                    <img src="<%= songs[i].albumCoverUrl %>" 
+                         class="card-img-top"
+                         style="height:200px; object-fit:cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= songs[i].song %>
+                        </h5>
+                        <p>
+                            <b>Artist:</b> <%= songs[i].name %>
+                        </p>
+                        <p>
+                            <b>Genre:</b> <%= songs[i].genre %>
+                        </p>
+                        <p>
+                            ❤️ Votes: <%= songs[i].votes || 0 %>
+                        </p>
+                        <% if (songs[i].previewUrl) { %>
+                            <a href="<%= songs[i].previewUrl %>" target="_blank"
+                               class="btn btn-success btn-sm w-100 mb-2">
+                                ▶ Preview
+                            </a>
+                        <% } %>
+                        <form action="/vote/<%= i %>" method="POST">
+                            <button 
+                                class="btn w-100 <%= hasVoted ? 'btn-secondary' : 'btn-danger' %>" 
+                                <%= hasVoted ? 'disabled' : '' %>
+                            >
+                                <%= hasVoted ? 'Voted ✔' : 'Vote 👍' %>
+                            </button>
+                        </form>
                     </div>
-
-                    <% } %>
-
+                </div>
             </div>
-
-        </div>
-
+        <% } %>
+    </div>
+</div>
 </body>
 
 </html>

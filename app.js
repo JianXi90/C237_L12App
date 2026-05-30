@@ -121,11 +121,13 @@ app.get('/view/:id', (req, res) => {
 
 
 app.get('/vote', (req, res) => {
-    res.render('vote', { songs });
+    res.render('vote', { songs, session: req.session });
 });
 
 app.get('/rankings', (req, res) => {
-    res.render('rankings');
+    let rankedSongs = [...songs];
+    rankedSongs.sort((a, b) => (b.votes || 0) - (a.votes || 0));
+    res.render('rankings', { rankedSongs });
 });
 
 app.get('/filter', (req, res) => {
