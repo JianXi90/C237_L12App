@@ -4,11 +4,21 @@ const express = require('express');
 // Create an Express application
 const app = express();
 
+// Create a session for express
+const session = require('express-session');
+
+app.use(session({
+    secret: 'musevote_secret',
+    resave: false,
+    saveUninitialized: true
+}));
+
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 
 // Middleware to parse request bodies
 app.use(express.urlencoded({ extended: true }));
+
 
 // Declare any necessary variables or in-memory data structures here
 let songs = [];
@@ -67,7 +77,22 @@ app.post('/update/:id', (req, res) => {
 
 app.post('/vote/:id', (req, res) => {
     const id = req.params.id;
+    // Creates session storage if not exists
+    if (!req.session.votedSongs) {
+        req.session.votedSongs = [];
+    }
+
+    // Check if already voted for this song
+    if (req.session.votedSongs.includes(id)) {
+        return res.redirect('/vote');
+    }
+
+    // Add vote
     songs[id].votes = (songs[id].votes || 0) + 1;
+
+    // Mark this song as voted
+    req.session.votedSongs.push(id);
+
     res.redirect('/vote');
 });
 
