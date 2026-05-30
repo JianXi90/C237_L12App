@@ -14,46 +14,43 @@
     <!-- Activity 4: Insert code here to include the header (found in the partials folder) to your page -->
     <%- include('partials/navbar') %>
         <div class="container py-5">
-            <h2>Top Ranking of Songs</h2>
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Rank</th>
-                        <th>Song</th>
-                        <th>Artist</th>
-                        <th>Genre</th>
-                        <th>Votes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(let i=0; i < rankedSongs.length; i++) { %>
-                        <tr>
-                            <td>
+            <h1 class="text-center mb-5">Top Songs Leaderboard</h1>
+            <div class="row">
+                <% for(let i=0; i < rankedSongs.length; i++) { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow h-100">
+                            <img src="<%= rankedSongs[i].albumCoverUrl %>" class="card-img-top"
+                                style="height:250px; object-fit:cover;">
+                            <div class="card-body text-center">
                                 <% if(i===0) { %>
-                                    🥇
+                                    <h1>🥇</h1>
                                     <% } else if(i===1) { %>
-                                        🥈
+                                        <h1>🥈</h1>
                                         <% } else if(i===2) { %>
-                                            🥉
+                                            <h1>🥉</h1>
                                             <% } else { %>
-                                                <%= i + 1 %>
-                                                    <% } %>
-                            </td>
-                            <td>
-                                <%= rankedSongs[i].song %>
-                            </td>
-                            <td>
-                                <%= rankedSongs[i].name %>
-                            </td>
-                            <td>
-                                <%= rankedSongs[i].genre %>
-                            </td>
-                            <td>❤️ <%= rankedSongs[i].votes || 0 %>
-                            </td>
-                        </tr>
-                        <% } %>
-                </tbody>
-            </table>
+                                                <h3>#<%= i + 1 %>
+                                                </h3>
+                                                <% } %>
+                                                    <h4>
+                                                        <%= rankedSongs[i].songTitle %>
+                                                    </h4>
+                                                    <p>
+                                                        <strong>
+                                                            <%= rankedSongs[i].artistName %>
+                                                        </strong>
+                                                    </p>
+                                                    <span class="badge bg-primary">
+                                                        <%= rankedSongs[i].genre %>
+                                                    </span>
+                                                    <hr>
+                                                    <h5>❤️ <%= rankedSongs[i].votes || 0 %> Votes</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
         </div>
 </body>
+
 </html>
