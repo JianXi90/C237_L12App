@@ -65,6 +65,12 @@ app.post('/update/:id', (req, res) => {
     res.redirect('/listofsongs');
 });
 
+app.post('/vote/:id', (req, res) => {
+    const id = req.params.id;
+    songs[id].votes = (songs[id].votes || 0) + 1;
+    res.redirect('/vote');
+});
+
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -90,7 +96,7 @@ app.get('/view/:id', (req, res) => {
 
 
 app.get('/vote', (req, res) => {
-    res.render('vote');
+    res.render('vote', { songs });
 });
 
 app.get('/rankings', (req, res) => {
