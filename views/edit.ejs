@@ -13,17 +13,16 @@
 
 <div class="container py-5">
     <h2>Edit Song</h2>
-
     <form action="/update/<%= id %>" method="POST">
 
         <div class="mb-3">
             <label>Artist Name</label>
-            <input type="text" name="artistName" class="form-control">
+            <input type="text" name="name" class="form-control">
         </div>
 
         <div class="mb-3">
             <label>Song Title</label>
-            <input type="text" name="songTitle" class="form-control">
+            <input type="text" name="song" class="form-control">
         </div>
 
         <div class="mb-3">

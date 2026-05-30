@@ -52,17 +52,16 @@ app.post('/edit/:id', (req, res) => {
     res.redirect('/listofsongs');
 });
 
-app.post('/upvote/:id', (req, res) => {
+app.post('/update/:id', (req, res) => {
     const id = req.params.id;
-        songs[id] = {
-        artistName: req.body.artistName,
-        songTitle: req.body.songTitle,
+    songs[id] = {
+        name: req.body.name,
+        song: req.body.song,
         genre: req.body.genre,
         description: req.body.description,
-        previewUrl: req.body.previewUrl,
-        albumCoverUrl: req.body.albumCoverUrl
+        albumCoverUrl: req.body.albumCoverUrl,
+        previewUrl: req.body.previewUrl
     };
-
     res.redirect('/listofsongs');
 });
 
