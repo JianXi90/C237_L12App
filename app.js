@@ -11,27 +11,84 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 
 // Declare any necessary variables or in-memory data structures here
-
+let songs = [];
 
 // TASK: Define appropriate routes below
 // ---------------------------------------------------
 
 //Define a route to render the index page
+
+
+app.post('/addSong', (req, res) => {
+    const newSong = {
+        name: req.body.name,
+        song: req.body.song,
+        genre: req.body.genre,
+        description: req.body.description,
+        previewUrl: req.body.previewUrl,
+        albumCoverUrl: req.body.albumCoverUrl
+    };
+    songs.push(newSong);
+    res.redirect('/listofsongs');
+});
+
+app.post('/delete/:id', (req, res) => {
+    const id = req.params.id;
+    songs.splice(id, 1);
+    res.redirect('/listofsongs');
+});
+
+app.post('/edit/:id', (req, res) => {
+    const id = req.params.id;
+    const updatedSong = {
+        name: req.body.name,
+        song: req.body.song,
+        genre: req.body.genre,
+        description: req.body.description,
+        previewUrl: req.body.previewUrl,
+        albumCoverUrl: req.body.albumCoverUrl
+    };
+    songs[id] = updatedSong;
+    res.redirect('/listofsongs');
+});
+
+app.post('/upvote/:id', (req, res) => {
+    const id = req.params.id;
+        songs[id] = {
+        artistName: req.body.artistName,
+        songTitle: req.body.songTitle,
+        genre: req.body.genre,
+        description: req.body.description,
+        previewUrl: req.body.previewUrl,
+        albumCoverUrl: req.body.albumCoverUrl
+    };
+
+    res.redirect('/listofsongs');
+});
+
 app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.post('/submit', (req, res) => {
-    // Handle the vote submission logic here
-    const { song, songTitle, genre, description, link, image } = req.body;
-    songs.push({ song, songTitle, genre, description, link, image });
-    res.redirect('/songs');
-    // You can access the submitted data using req.body
-    // For example, if you have a form field named 'song', you can access it with req.body.song
-});
 app.get('/songs', (req, res) => {
     res.render('songs');
 });
+
+app.get('/listofsongs', (req, res) => {
+    res.render('listofsongs', { songs });
+});
+
+app.get('/edit/:id', (req, res) => {
+    const id = req.params.id;
+    res.render('edit', { song: songs[id], id });
+});
+
+app.get('/view/:id', (req, res) => {
+    const id = req.params.id;
+    const song = songs[id];
+    res.render('view', { song: songs[id] });
+});
+
 
 app.get('/vote', (req, res) => {
     res.render('vote');

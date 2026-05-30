@@ -11,21 +11,36 @@
 
 <body>
     <!-- Activity 4: Insert code here to include the header (found in the partials folder) to your page -->
-    <%- include('partials/header') %>
+    <%- include('partials/navbar') %>
         <div class="container py-5">
-            <h2>View Cafe Details</h2>
-            <p>Restaurant: <%= cafe.Restaurant %>
+            <h2>🎵 View Song Details</h2>
+            <p><b>Song Title:</b>
+                <%= song.songTitle %>
             </p>
-            <p>Food: <%= cafe.Food %>
+            <p><b>Artist Name:</b>
+                <%= song.artistName %>
             </p>
-            <p>Rating: <%= cafe.rating %>★</p>
-            <p>Priority: <%= cafe.priority %>
+            <p><b>Genre:</b>
+                <%= song.genre %>
             </p>
-            <p>Comments: <%= cafe.comments %>
+            <p><b>Description:</b>
+                <%= song.description ? song.description : "No description" %>
             </p>
-            <button onclick="history.back()" class="btn btn-primary mt-3">
-                Back
-            </button>
+            <p>
+                <b>Album Cover:</b><br>
+                <img src="<%= song.albumCoverUrl %>"
+                    style="width:150px; height:150px; object-fit:cover; border-radius:10px;">
+            </p>
+            <p>
+                <b>Preview:</b><br>
+                <a href="<%= song.previewUrl %>" target="_blank" class="btn btn-success">
+                    ▶ Play Preview
+                </a>
+            </p>
+        </div>
+        <button onclick="history.back()" class="btn btn-primary mt-3">
+            Back
+        </button>
         </div>
 
 </body>
