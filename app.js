@@ -97,7 +97,10 @@ app.post('/vote/:id', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.render('index');
+    let topSongs = [...songs];
+    topSongs.sort((a, b) => (b.votes || 0) - (a.votes || 0));
+    topSongs = topSongs.slice(0, 3);
+    res.render('index', { songs, topSongs });
 });
 
 app.get('/songs', (req, res) => {

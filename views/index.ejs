@@ -19,7 +19,63 @@
         </div>
         <div class="text-center mt-4">
             <h2>Top 3 Trending Songs</h2>
-            
+            <a href="/rankings" class="btn btn-warning">
+                View Rankings
+            </a>
+        </div>
+        <div class="row">
+
+            <% for(let i=0; i < topSongs.length; i++) { %>
+
+                <div class="col-md-4 mb-4">
+
+                    <div class="card shadow h-100">
+
+                        <img src="<%= topSongs[i].albumCoverUrl %>" class="card-img-top"
+                            style="height:250px; object-fit:cover;">
+
+                        <div class="card-body text-center">
+
+                            <% if(i===0) { %>
+                                <h1>🥇</h1>
+                                <% } else if(i===1) { %>
+                                    <h1>🥈</h1>
+                                    <% } else { %>
+                                        <h1>🥉</h1>
+                                        <% } %>
+
+                                            <h4>
+                                                <%= topSongs[i].song %>
+                                            </h4>
+
+                                            <p>
+                                                <strong>
+                                                    <%= topSongs[i].name %>
+                                                </strong>
+                                            </p>
+
+                                            <p>
+                                                <span class="badge bg-primary">
+                                                    <%= topSongs[i].genre %>
+                                                </span>
+                                            </p>
+
+                                            <h5>
+                                                ❤️ <%= topSongs[i].votes || 0 %> Votes
+                                            </h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <% } %>
+
+        </div>
+
+        </div>
+
         </div>
         <div class="text-center mt-4">
             <h2>Featured Genres</h2>
