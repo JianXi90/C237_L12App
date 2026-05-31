@@ -135,7 +135,33 @@ app.get('/rankings', (req, res) => {
 });
 
 app.get('/filter', (req, res) => {
-    res.render('filter');
+    let filteredSongs = [...songs];
+    const { search, genre, sort } = req.query;
+    // Search artist or song
+    if (search && search.trim() !== "") {
+        const keyword = search.toLowerCase();
+        filteredSongs = filteredSongs.filter(song =>
+            song.songTitle.toLowerCase().includes(keyword) ||
+            song.artistName.toLowerCase().includes(keyword)
+        );
+    }
+
+    // Genre filter
+    if (genre && genre !== "") {
+        filteredSongs = filteredSongs.filter(song =>
+            song.genre === genre
+        );
+    }
+
+    // Sort by votes
+    if (sort === "top") {
+        filteredSongs.sort((a, b) => (b.votes || 0) - (a.votes || 0));
+    }
+    let genres = [...new Set(songs.map(s => s.genre))];
+    res.render('filter', {
+        songs: filteredSongs,
+        genres
+    });
 });
 // ---------------------------------------------------
 

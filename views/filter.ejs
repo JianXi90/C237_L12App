@@ -11,71 +11,66 @@
 
 <body>
     <!-- Activity 4: Insert code here to include the header (found in the partials folder) to your page -->
-    <%- include('partials/header') %>
-        <form action="/filter" method="GET">
-            <div class="container py-5">
-                <h2>Filter by Rating and Keyword</h2>
-                <div class="mb-3">
-                    <label for="rating" class="form-label">Minimum Rating:</label>
-                    <select class="form-control" id="rating" name="rating">
-                        <option value="">Select Rating</option>
-                        <option value="1">1★</option>
-                        <option value="2">2★</option>
-                        <option value="3">3★</option>
-                        <option value="4">4★</option>
-                        <option value="5">5★</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="keyword" class="form-label">Keyword by Food name or Comments:</label>
-                    <input type="text" class="form-control" id="keyword" name="keyword"
-                        placeholder="Enter food name or comment">
-                </div>
-                <button type="submit" class="btn btn-primary">Filter</button>
-                <a href="/confirm" class="btn btn-secondary">Reset</a>
-        </form>
+    <%- include('partials/navbar') %>
+        <div class="container py-5">
+            <h2 class="mb-4"> Filter Cool Songs</h2>
+            <form method="GET" action="/filter" class="mb-4">
+                <div class="row g-2">
 
-        <table class="table table-striped mt-4">
-            <thead>
-                <tr>
-                    <th>Restaurant</th>
-                    <th>Food</th>
-                    <th>Rating</th>
-                    <th>Priority</th>
-                    <th>Comments</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% if (cafes.length=== 0) { %>
-                    <tr>
-                        <td colspan="5" class="text-center">
-                            No such reviews match the filter criteria.
-                        </td>
-                    </tr>
-                    <% } else { %>
-                        <% cafes.forEach(cafe=> { %>
-                            <tr>
-                                <td>
-                                    <%= cafe.Restaurant %>
-                                </td>
-                                <td>
-                                    <%= cafe.Food %>
-                                </td>
-                                <td>
-                                    <%= cafe.rating %>★
-                                </td>
-                                <td>
-                                    <%= cafe.priority %>
-                                </td>
-                                <td>
-                                    <%= cafe.comments %>
-                                </td>
-                            </tr>
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control" placeholder="Search artist or song...">
+                    </div>
+
+                    <div class="col-md-3">
+                        <select name="genre" class="form-select">
+                            <option value="">All Genres</option>
+
+                            <% genres.forEach(g=> { %>
+                                <option value="<%= g %>">
+                                    <%= g %>
+                                </option>
+                                <% }) %>
+
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="sort" class="form-select">
+                            <option value="">Normal</option>
+                            <option value="top">Most Voted</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100">Filter</button>
+                    </div>
+
+                </div>
+
+            </form>
+            <div class="row">
+                <% if (songs.length===0) { %>
+                    <p>No songs found</p>
+                    <% } %>
+                        <% songs.forEach(song=> { %>
+                            <div class="col-md-4 mb-4">
+                                <div class="card shadow">
+                                    <img src="<%= song.albumCoverUrl %>" class="card-img-top"
+                                        style="height:200px; object-fit:cover;">
+                                    <div class="card-body">
+                                        <h5>
+                                            <%= song.songTitle %>
+                                        </h5>
+                                        <p><b>Artist:</b>
+                                            <%= song.artistName %>
+                                        </p>
+                                        <p><b>Genre:</b>
+                                            <%= song.genre %>
+                                        </p>
+                                        <p>❤️ <%= song.votes || 0 %> votes</p>
+                                    </div>
+                                </div>
+                            </div>
                             <% }) %>
-                                <% } %>
-
-            </tbody>
-        </table>
+            </div>
         </div>
 </body>
 
