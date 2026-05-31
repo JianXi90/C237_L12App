@@ -63,10 +63,21 @@
         </div>
         <div class="text-center mt-4">
             <h2>Featured Genres</h2>
+            <div class="d-flex flex-wrap gap-2 text-center justify-content-center mt-3">
+                <% genres.forEach(genre=> { %>
+                    <% let colors=["bg-primary","bg-danger","bg-success","bg-warning","bg-info","bg-dark"]; let
+                        colorClass=colors[Math.floor(Math.random() * colors.length)]; %>
+                        <div class="p-4 text-white rounded shadow text-center <%= colorClass %>"
+                            style="width:120px; height:120px; display:flex; align-items:center; justify-content:center;">
+                            <%= genre %>
+                        </div>
+                        <% }) %>
+            </div>
         </div>
         <div class="text-center mt-4">
             <h2>Songs Stats</h2>
-            <h4>Total Songs: <%= Object.keys(songs).length %></h4>
+            <h4>Total Songs: <%= Object.keys(songs).length %>
+            </h4>
             <h4>Total Votes: <%= Object.values(songs).reduce((total, song)=> total + (song.votes || 0), 0) %></h4>
         </div>
 </body>
