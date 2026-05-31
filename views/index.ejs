@@ -55,7 +55,12 @@
                                             <h5>
                                                 ❤️ <%= topSongs[i].votes || 0 %> Votes
                                             </h5>
-
+                                            <% if (topSongs[i].previewUrl) { %>
+                                                <a href="<%= topSongs[i].previewUrl %>" target="_blank"
+                                                    class="btn btn-success btn-sm w-100 mt-2">
+                                                    ▶ Play Preview
+                                                </a>
+                                                <% } %>
                         </div>
                     </div>
                 </div>
